@@ -94,9 +94,9 @@ low-level-design-in-java/
 
 | # | System Design Problem                                                            |
 |---|----------------------------------------------------------------------------------|
-| 5 | [Car Rental System](./src/main/java/org/lld/practice/design_car_rental_system)   |
-| 6 | [Parking Lot System](./src/main/java/org/lld/practice/design_parking_lot_system) |
-| 8 | [Vending Machine](./src/main/java/org/lld/practice/design_vending_machine)       |
+| 1 | [Car Rental System](./src/main/java/org/lld/practice/design_car_rental_system)   |
+| 2 | [Parking Lot System](./src/main/java/org/lld/practice/design_parking_lot_system) |
+| 3 | [Vending Machine](./src/main/java/org/lld/practice/design_vending_machine)       |
 
 ---
 
