@@ -92,12 +92,13 @@ low-level-design-in-java/
 
 ## 🛠 Practice Problems
 
-| # | System Design Problem                                                            |
-|---|----------------------------------------------------------------------------------|
-| 1 | [Car Rental System](./src/main/java/org/lld/practice/design_car_rental_system)   |
-| 2 | [Parking Lot System](./src/main/java/org/lld/practice/design_parking_lot_system) |
-| 3 | [Vending Machine](./src/main/java/org/lld/practice/design_vending_machine)       |
-| 4 | [Snake And Ladder](./src/main/java/org/lld/practice/design_snake_and_ladder)     |
+| # | System Design Problem                                                                              |
+|---|----------------------------------------------------------------------------------------------------|
+| 1 | [Car Rental System](./src/main/java/org/lld/practice/design_car_rental_system)                     |
+| 2 | [Parking Lot System](./src/main/java/org/lld/practice/design_parking_lot_system)                   |
+| 3 | [Vending Machine](./src/main/java/org/lld/practice/design_vending_machine)                         |
+| 4 | [Snake And Ladder](./src/main/java/org/lld/practice/design_snake_and_ladder)                       |
+| 5 | [Online Movie Booking System](./src/main/java/org/lld/practice/design_movie_ticket_booking_system) |
 
 ---
 
