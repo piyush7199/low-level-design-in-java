@@ -99,6 +99,7 @@ low-level-design-in-java/
 | 3 | [Vending Machine](./src/main/java/org/lld/practice/design_vending_machine)                         |
 | 4 | [Snake And Ladder](./src/main/java/org/lld/practice/design_snake_and_ladder)                       |
 | 5 | [Online Movie Booking System](./src/main/java/org/lld/practice/design_movie_ticket_booking_system) |
+| 7 | [Online Hotel Booking System](./src/main/java/org/lld/practice/design_online_hotel_booking_system) |
 
 ---
 
