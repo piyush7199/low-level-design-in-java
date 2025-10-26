@@ -1,0 +1,541 @@
+# Low-Level Design in Java - Cursor Rules
+
+## 🎯 Project Overview
+This is a comprehensive Low-Level Design (LLD) repository for Java developers and interview candidates. It contains design patterns, real-world system designs, and educational content focused on OOP principles, SOLID design, and software architecture best practices.
+
+**Purpose:** Interview preparation, learning design patterns, and building scalable systems.
+
+## 📂 Project Structure
+
+### Package Organization
+```
+org.lld/
+├── patterns/          # Design pattern implementations
+│   ├── creational/    # Factory, Singleton, Builder, Prototype, Abstract Factory
+│   ├── structural/    # Adapter, Decorator, Flyweight
+│   └── behavioural/   # Observer, Strategy, State, Command, Chain of Responsibility
+├── practice/          # Real-world system design problems
+│   └── design_*/      # Each system has naive_solution/ and improved_solution/
+└── resources/docs/    # Educational documentation (OOP, SOLID, UML)
+```
+
+### Standard Directory Structure for Practice Problems
+Each practice problem MUST follow this structure:
+```
+design_[system_name]/
+├── README.md                    # Problem statement, requirements, design discussion
+├── naive_solution/              # Simple implementation showing common pitfalls
+│   └── *.java                   # Minimal classes, demonstrates anti-patterns
+└── improved_solution/           # Production-ready implementation
+    ├── models/                  # Domain entities (POJOs, enums, value objects)
+    ├── services/                # Business logic layer
+    ├── strategies/              # Strategy pattern implementations
+    ├── states/                  # State pattern implementations (if applicable)
+    ├── factories/               # Factory pattern implementations (if applicable)
+    ├── repositories/            # Data access layer (if applicable)
+    └── Main.java               # Demo/example usage
+```
+
+## ☕ Java Code Standards
+
+### Java Version
+- **Target:** Java 17+ (currently Java 21 in pom.xml)
+- Use modern Java features: Records, Pattern Matching, Text Blocks where appropriate
+- Avoid deprecated APIs
+
+### Naming Conventions
+
+#### Classes
+- **PascalCase** for class names
+- Use **nouns** for entity classes: `Vehicle`, `ParkingSpot`, `Order`
+- Use descriptive suffixes:
+  - `*Service` for business logic: `PaymentService`, `OrderService`
+  - `*Strategy` for strategy implementations: `PricingStrategy`, `MatchingStrategy`
+  - `*State` for state implementations: `IdleState`, `AuthenticatedState`
+  - `*Factory` for factories: `VehicleFactory`, `PaymentFactory`
+  - `*Repository` for data access: `UserRepository`, `BookRepository`
+  - `*Manager` for coordinators: `ParkingSpotManager`
+  - NO `*Impl`, `*Class`, `*Object` suffixes
+
+#### Interfaces
+- Use **adjectives** or **nouns**: `Comparable`, `Serializable`, `PaymentProcessor`
+- Avoid `I` prefix (Hungarian notation): ❌ `IPayment` ✅ `PaymentProcessor`
+
+#### Methods
+- **camelCase** for method names
+- Use **verbs** or verb phrases: `calculateTotal()`, `processPayment()`, `findAvailableSpot()`
+- Boolean methods start with `is`, `has`, `can`: `isAvailable()`, `hasPermission()`, `canProcess()`
+- Collection getters: `getItems()` not `getItemList()`
+
+#### Variables
+- **camelCase** for variables
+- Descriptive names: `customerName`, `totalOrderCount`, `isActiveUser`
+- Avoid single-letter names except for loops: ❌ `n`, `d`, `c` ✅ `name`, `distance`, `customer`
+- Boolean variables: `isValid`, `hasAccess`, `canProceed`
+
+#### Constants
+- **UPPER_SNAKE_CASE** for constants
+- Example: `MAX_CONNECTIONS`, `DEFAULT_CURRENCY`, `HOURLY_RATE`
+
+#### Packages
+- **lowercase** only: `org.lld.patterns.creational.singleton`
+- Use full words, not abbreviations: `behavioural` not `beh`
+
+### Class Organization Order
+Every class MUST follow this order:
+```java
+public class ExampleClass {
+    // 1. Constants (static final)
+    private static final int MAX_RETRY = 3;
+    
+    // 2. Static variables
+    private static ExampleClass instance;
+    
+    // 3. Instance variables (fields)
+    private final String name;
+    private final Repository repository;
+    
+    // 4. Constructors
+    public ExampleClass(String name, Repository repository) {
+        this.name = name;
+        this.repository = repository;
+    }
+    
+    // 5. Public methods
+    public void doSomething() { }
+    
+    // 6. Protected methods
+    protected void helperMethod() { }
+    
+    // 7. Private methods
+    private void internalHelper() { }
+    
+    // 8. Getters and Setters
+    public String getName() { return name; }
+    
+    // 9. Inner classes (if needed)
+    private static class HelperClass { }
+}
+```
+
+## 🎨 Design Pattern Standards
+
+### When to Use Each Pattern
+
+#### Creational Patterns
+- **Singleton**: Single instance needed (ParkingLot, DatabaseConnection, BankingService)
+- **Factory**: Object type determined at runtime (Vehicle types, Payment methods)
+- **Builder**: Complex construction with many optional parameters (Car with options)
+- **Prototype**: Expensive object creation, need cloning (Game templates)
+- **Abstract Factory**: Families of related objects (UI components, Database drivers)
+
+#### Structural Patterns
+- **Adapter**: Interface incompatibility (Legacy system integration)
+- **Decorator**: Dynamic behavior addition (Coffee with add-ons, Pizza toppings)
+- **Flyweight**: Many similar objects, memory optimization (Game objects)
+
+#### Behavioral Patterns
+- **Strategy**: Algorithm varies at runtime (Pricing, Sorting, Matching)
+- **Observer**: One-to-many notifications (Order updates, Event handling)
+- **State**: Behavior changes with state (Order lifecycle, ATM states)
+- **Command**: Encapsulate requests, support undo/redo (Transactions)
+- **Chain of Responsibility**: Request handling chain (Approval workflows, Logging)
+
+### Pattern Implementation Rules
+
+#### Singleton Pattern
+- Use **Bill Pugh Singleton** (static inner helper class) as default
+- Thread-safe without synchronization overhead
+- Private constructor MUST throw exception if instance already exists (prevent reflection attacks)
+```java
+public class ParkingLot {
+    private ParkingLot() {
+        if (instance != null) {
+            throw new IllegalStateException("Instance already created");
+        }
+    }
+    
+    private static class SingletonHelper {
+        private static final ParkingLot INSTANCE = new ParkingLot();
+    }
+    
+    public static ParkingLot getInstance() {
+        return SingletonHelper.INSTANCE;
+    }
+}
+```
+
+#### Strategy Pattern
+- Always create an **interface** first
+- One method per strategy interface (Interface Segregation Principle)
+- Pass context/data as parameters, strategies should be stateless
+```java
+interface PricingStrategy {
+    double calculateFee(Ticket ticket, LocalDateTime exitTime);
+}
+```
+
+#### State Pattern
+- State interface defines behavior, not just data
+- State transitions handled by states themselves
+- Context holds current state
+```java
+interface OrderState {
+    void next(Order order);
+    void prev(Order order);
+    void printStatus();
+}
+```
+
+#### Factory Pattern
+- Use static factory methods for simple cases
+- Separate Factory class for complex creation logic
+- Return interface/abstract class, not concrete types
+
+#### Observer Pattern
+- Use `List<Observer>` for maintaining observers
+- Provide `attach()`, `detach()`, `notifyObservers()` methods
+- Observers should implement an interface
+
+## 🏗️ SOLID Principles (MANDATORY)
+
+### Single Responsibility Principle (SRP)
+- Each class has **ONE reason to change**
+- Separate: Models, Services, Repositories, Strategies, States
+- NO God classes - if a class has more than 5-7 public methods, consider splitting
+
+### Open/Closed Principle (OCP)
+- Open for extension, closed for modification
+- Use interfaces and abstract classes
+- Strategy pattern for varying algorithms
+- Avoid switch statements on type - use polymorphism
+
+### Liskov Substitution Principle (LSP)
+- Subclasses must be substitutable for base classes
+- Don't break parent class contracts
+- Prefer composition over inheritance when behavior differs significantly
+
+### Interface Segregation Principle (ISP)
+- Many specific interfaces > one general interface
+- Don't force classes to implement unused methods
+- Example: `Workable`, `Eatable`, `Sleepable` instead of one `Worker` interface
+
+### Dependency Inversion Principle (DIP)
+- Depend on abstractions, not concretions
+- Use constructor injection for dependencies
+- Services depend on interfaces, not concrete implementations
+```java
+// ✅ Good
+public class PaymentService {
+    private final PricingStrategy pricingStrategy;
+    
+    public PaymentService(PricingStrategy pricingStrategy) {
+        this.pricingStrategy = pricingStrategy;
+    }
+}
+
+// ❌ Bad
+public class PaymentService {
+    private HourlyPricing pricing = new HourlyPricing();
+}
+```
+
+## 📝 Documentation Standards
+
+### README.md for Each Practice Problem
+Every practice problem MUST have a README.md with:
+1. **Problem Statement** - Clear description of what to build
+2. **Requirements** - Functional and non-functional requirements
+3. **Naive Solution** - Explanation of common pitfalls and design flaws
+4. **Improved Solution** - Design discussion, patterns used, SOLID principles applied
+5. **Key Learnings** - What makes the improved solution better
+
+### README.md Template Structure
+```markdown
+# Design [System Name]
+
+## 1. Problem Statement and Requirements
+### Functional Requirements:
+- Bullet points
+
+### Non-Functional Requirements:
+- Scalability, Reliability, Maintainability, etc.
+
+## 2. Naive Solution: The "Starting Point"
+### The Thought Process:
+### Limitations and Design Flaws:
+- Violation of SOLID principles
+- Tight coupling issues
+- Concurrency concerns
+
+## 3. Improved Solution: The "Mentor's Guidance"
+### Design Patterns Used:
+### Core Classes and Interactions:
+
+## 4. Final Design Overview
+- Architecture summary
+- Why this design is better
+```
+
+### Code Comments
+- Use **JavaDoc** for public classes and methods
+- Explain **WHY**, not WHAT (code should be self-documenting)
+- Add comments for complex algorithms or non-obvious design decisions
+- Document thread-safety considerations
+```java
+/**
+ * Service for managing user-related operations.
+ * 
+ * This service handles user registration, authentication,
+ * and profile management. All methods in this class are
+ * thread-safe.
+ * 
+ * @author [Your Name]
+ * @version 1.0
+ * @since 2024-01-01
+ */
+public class UserService {
+    /**
+     * Calculates the total price including tax and discounts.
+     * 
+     * @param items List of items (must not be null or empty)
+     * @param taxRate Tax rate as decimal (e.g., 0.08 for 8%)
+     * @param discountCode Optional discount code (can be null)
+     * @return Total price after tax and discounts
+     * @throws IllegalArgumentException if items is null or empty
+     * @throws InvalidDiscountException if discount code is invalid
+     */
+    public double calculateTotal(List<Item> items, double taxRate, String discountCode) {
+        // implementation
+    }
+}
+```
+
+### Pattern README.md
+Each pattern directory should have:
+- **Definition** and intent
+- **Intuition** - Why this pattern exists
+- **Use Cases** - When to apply
+- **Code Example** - Complete working example
+- **UML Diagram** - Visual representation
+- **Pros & Cons** - Trade-offs
+- **Further Reading** - External resources
+
+## 🎯 Code Quality Standards
+
+### Error Handling
+- Use **specific exceptions**, not generic `Exception`
+- Create custom exceptions for domain-specific errors
+- Fail fast - validate inputs at method entry
+- Use `Optional<T>` for methods that might return null
+```java
+// ✅ Good
+public Optional<ParkingSpot> findAvailableSpot(VehicleType type) {
+    Objects.requireNonNull(type, "Vehicle type cannot be null");
+    // ... logic
+    return Optional.ofNullable(spot);
+}
+
+// ❌ Bad
+public ParkingSpot findAvailableSpot(VehicleType type) throws Exception {
+    return null; // Might return null
+}
+```
+
+### Immutability
+- Use `final` for fields that don't change
+- Use `final` for method parameters
+- Consider using records for simple data classes (Java 17+)
+- Make defensive copies of mutable objects
+```java
+// ✅ Good - Immutable
+public class Ticket {
+    private final String ticketId;
+    private final String vehiclePlate;
+    private final LocalDateTime entryTime;
+    
+    public Ticket(String ticketId, String vehiclePlate) {
+        this.ticketId = ticketId;
+        this.vehiclePlate = vehiclePlate;
+        this.entryTime = LocalDateTime.now();
+    }
+    
+    // Only getters, no setters
+}
+```
+
+### Null Safety
+- Use `Objects.requireNonNull()` for null checks
+- Return `Optional<T>` instead of null
+- Use `@NonNull` annotations where available
+- Initialize collections to empty, not null: `new ArrayList<>()` not `null`
+
+### Enum Usage
+- Use enums for fixed set of constants: `VehicleType`, `OrderStatus`, `SpotSize`
+- Add behavior to enums when appropriate
+```java
+public enum VehicleType {
+    MOTORCYCLE(SpotSize.SMALL),
+    CAR(SpotSize.MEDIUM),
+    BUS(SpotSize.LARGE);
+    
+    private final SpotSize requiredSpotSize;
+    
+    VehicleType(SpotSize requiredSpotSize) {
+        this.requiredSpotSize = requiredSpotSize;
+    }
+    
+    public SpotSize getRequiredSpotSize() {
+        return requiredSpotSize;
+    }
+}
+```
+
+### Method Design
+- Keep methods **short** (< 20 lines ideally, max 50 lines)
+- One level of abstraction per method
+- Max 3-4 parameters (use builder or parameter object for more)
+- Return early to reduce nesting
+```java
+// ✅ Good - Early return
+public void processOrder(Order order) {
+    if (order == null) return;
+    if (!order.isValid()) return;
+    // ... process
+}
+
+// ❌ Bad - Deep nesting
+public void processOrder(Order order) {
+    if (order != null) {
+        if (order.isValid()) {
+            // ... deep nesting
+        }
+    }
+}
+```
+
+## 🧪 Testing Considerations
+- Each class should be testable in isolation
+- Use dependency injection for easier mocking
+- Avoid static methods (except factory methods)
+- Design for testability: separate concerns, small methods
+
+## 🚫 Anti-Patterns to Avoid
+
+### God Classes
+❌ One class doing everything - violates SRP
+```java
+// ❌ BAD
+class ParkingLot {
+    void findSpot() { }
+    void calculateFee() { }
+    void processPayment() { }
+    void sendEmail() { }
+    void generateReport() { }
+    // 50 more methods...
+}
+```
+
+### Magic Numbers/Strings
+❌ Use constants or enums
+```java
+// ❌ BAD
+if (status == 5) { }
+if (type.equals("premium")) { }
+
+// ✅ GOOD
+if (status == OrderStatus.DELIVERED) { }
+if (type == CustomerType.PREMIUM) { }
+```
+
+### Tight Coupling
+❌ Direct dependencies on concrete classes
+```java
+// ❌ BAD
+class OrderService {
+    private MySQLDatabase db = new MySQLDatabase();
+}
+
+// ✅ GOOD
+class OrderService {
+    private final Database database;
+    public OrderService(Database database) {
+        this.database = database;
+    }
+}
+```
+
+### Premature Optimization
+❌ Don't over-engineer before needed
+- Start simple, add complexity only when required
+- Don't use 10 patterns for a simple problem
+- Optimize based on actual performance issues, not assumptions
+
+## 🎓 Interview-Ready Code Standards
+
+### Code Should Demonstrate
+1. **Clear thinking** - Well-organized, logical flow
+2. **Design patterns** - Appropriate pattern usage (not forced)
+3. **SOLID principles** - Especially SRP and OCP
+4. **Extensibility** - Easy to add new features
+5. **Error handling** - Edge cases considered
+6. **Clean code** - Readable, maintainable
+
+### Main.java Demo Files
+- Show **realistic usage scenarios**
+- Demonstrate **multiple features**
+- Include **edge cases**
+- Print clear output showing system behavior
+```java
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== Parking Lot System Demo ===\n");
+        
+        // Initialize system
+        ParkingLot parkingLot = ParkingLot.getInstance(...);
+        
+        // Demonstrate feature 1
+        System.out.println("1. Vehicle Entry:");
+        // ... code
+        
+        // Demonstrate feature 2
+        System.out.println("\n2. Vehicle Exit:");
+        // ... code
+    }
+}
+```
+
+## 📊 UML Diagrams
+- Store in `src/main/java/org/lld/diagrams/` directory
+- Use PNG or SVG format
+- Name format: `pattern-name-uml.png`
+- Reference in README.md files
+
+## 🔄 Version Control
+- Commit messages should be clear and descriptive
+- Group related changes together
+- Don't commit commented-out code
+- Don't commit IDE-specific files (already in .gitignore)
+
+## 📦 Maven Standards
+- Java compiler source/target: 17+
+- UTF-8 encoding
+- Keep dependencies minimal (this is educational code)
+- No unnecessary plugins
+
+## 🎯 Key Principles Summary
+
+**Remember:**
+1. **Clarity over cleverness** - Code should be easy to understand
+2. **SOLID principles** - Apply them consistently
+3. **Design patterns** - Use when they solve a problem, not just because they exist
+4. **Extensibility** - Design for future changes
+5. **Separation of concerns** - Each class has one job
+6. **Interview focus** - Code should demonstrate your design thinking
+
+**Good design is not about following rules blindly, but understanding trade-offs and making informed decisions!**
+
+---
+
+*These rules are designed to maintain consistency across the repository and ensure all code is production-ready and interview-appropriate.*
+
