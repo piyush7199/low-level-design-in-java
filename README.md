@@ -6,7 +6,7 @@
 
 Welcome to the **most comprehensive Low-Level Design resource** for Java developers and interview candidates!  
 
-This repository contains **13 design patterns**, **22 real-world system designs**, and **detailed explanations** of OOP principles, SOLID, and software architecture best practices.
+This repository contains **13 design patterns**, **27 real-world system designs**, and **detailed explanations** of OOP principles, SOLID, and software architecture best practices.
 
 Perfect for:
 - 🎯 **SDE Interview Preparation** (Amazon, Google, Microsoft, etc.)
@@ -43,7 +43,7 @@ Perfect for:
 ### For Learning:
 - 📘 **Comprehensive documentation** for every concept
 - 🔹 **13 Design Patterns** with real-world use cases
-- 🛠 **22 Complete Systems** from simple to complex
+- 🛠 **27 Complete Systems** from simple to complex
 - 🧩 **Progressive difficulty** - start simple, master complex
 - 📊 **UML diagrams** for visual understanding
 
@@ -152,6 +152,11 @@ Each problem includes:
 | 20 | [Logger System](./src/main/java/org/lld/practice/design_logger_system)                                      | Strategy, Observer, Factory, Chain of Responsibility |
 | 21 | [Notification System](./src/main/java/org/lld/practice/design_notification_system)                        | Strategy, Factory, Observer, Command                  |
 | 22 | [URL Shortener (TinyURL)](./src/main/java/org/lld/practice/design_url_shortener)                          | Strategy, Factory, Repository                        |
+| 23 | [Chat Application](./src/main/java/org/lld/practice/design_chat_application)                              | Observer, Strategy, State, Repository                |
+| 24 | [Leaderboard System](./src/main/java/org/lld/practice/design_leaderboard_system)                          | Strategy, Factory, Observer                          |
+| 25 | [Calendar/Event Booking System](./src/main/java/org/lld/practice/design_calendar_event_booking)          | Strategy, Factory, Observer, State, Repository        |
+| 26 | [Expense Sharing System (Splitwise-like)](./src/main/java/org/lld/practice/design_expense_sharing_system)  | Strategy, Factory, Graph Algorithm                     |
+| 27 | [Tic-Tac-Toe Game](./src/main/java/org/lld/practice/design_tic_tac_toe)                                    | Strategy, State, Factory, Observer                    |
 
 
 ---
@@ -320,9 +325,9 @@ We welcome contributions! Here's how:
 ## 📈 Repository Stats
 
 - **Design Patterns:** 13 implemented
-- **Practice Problems:** 22 complete systems
-- **Code Examples:** 250+ files
-- **Lines of Code:** 10000+
+- **Practice Problems:** 27 complete systems
+- **Code Examples:** 350+ files
+- **Lines of Code:** 15000+
 - **Documentation:** Comprehensive READMEs for each topic
 
 ---
