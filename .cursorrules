@@ -118,6 +118,25 @@ public class ExampleClass {
 }
 ```
 
+## 📋 Practice Problems Reference
+
+| # | System Design Problem | Key Patterns | Difficulty |
+|---|----------------------|--------------|------------|
+| 1 | Car Rental System | Strategy, State, Factory | Medium |
+| 2 | Parking Lot System | Singleton, Strategy | Medium |
+| 3 | Vending Machine | State, Strategy | Easy |
+| 4 | Snake And Ladder | Factory, Strategy | Easy |
+| 5 | Movie Ticket Booking System | Singleton, Factory, Strategy | Medium |
+| 6 | Online Hotel Booking System | Strategy, Observer, Factory | Medium |
+| 7 | ATM System | State, Strategy, Command, Singleton | Hard |
+| 8 | Library Management System | Strategy, Observer, Repository | Medium |
+| 9 | Elevator System | State, Strategy, Observer, Command | Hard |
+| 10 | Food Delivery System | Strategy, State, Observer, Factory | Hard |
+| 11 | Ride-Sharing System | Strategy, State, Observer, Factory, Singleton | Hard |
+| 12 | **Queue Management System (Token)** | **Singleton, Strategy, Observer, State, Factory, Command** | **Medium** |
+
+---
+
 ## 🎨 Design Pattern Standards
 
 ### When to Use Each Pattern
@@ -470,6 +489,129 @@ class OrderService {
 - Start simple, add complexity only when required
 - Don't use 10 patterns for a simple problem
 - Optimize based on actual performance issues, not assumptions
+
+## 🎫 Practice Problem: Online Queue Management (Token System)
+
+### Problem Overview
+Design a Token-based Queue Management System for banks, hospitals, government offices, or service centers where customers take tokens and wait for their turn.
+
+### Functional Requirements
+- **Token Generation**: Generate unique tokens for customers with optional priority levels
+- **Multiple Counters/Service Points**: Support multiple service counters serving different token types
+- **Queue Management**: FIFO processing with priority queue support (VIP, Senior Citizen, Regular)
+- **Status Tracking**: Track token status (Waiting, Being Served, Completed, Cancelled, No-Show)
+- **Counter Assignment**: Assign tokens to available counters based on service type
+- **Notifications**: Notify customers when their turn is approaching
+- **Display Board**: Show current token being served at each counter
+- **Analytics**: Track average wait time, service time, tokens processed
+
+### Non-Functional Requirements
+- Handle high concurrency (multiple tokens generated simultaneously)
+- Real-time updates for display boards
+- Scalable for multiple branches/locations
+
+### Suggested Directory Structure
+```
+design_queue_management_system/
+├── README.md
+├── naive_solution/
+│   └── QueueSystem.java          # God class anti-pattern
+└── improved_solution/
+    ├── models/
+    │   ├── Token.java            # Token entity with status
+    │   ├── TokenStatus.java      # Enum: WAITING, SERVING, COMPLETED, CANCELLED, NO_SHOW
+    │   ├── TokenType.java        # Enum: REGULAR, PRIORITY, VIP, SENIOR_CITIZEN
+    │   ├── Counter.java          # Service counter entity
+    │   ├── CounterStatus.java    # Enum: AVAILABLE, BUSY, CLOSED
+    │   └── Customer.java         # Customer details
+    ├── services/
+    │   ├── TokenService.java     # Token generation and management
+    │   ├── QueueService.java     # Queue operations
+    │   ├── CounterService.java   # Counter management
+    │   └── NotificationService.java
+    ├── strategies/
+    │   ├── TokenAssignmentStrategy.java      # Interface
+    │   ├── FIFOAssignmentStrategy.java       # First-in-first-out
+    │   ├── PriorityAssignmentStrategy.java   # Priority-based
+    │   └── RoundRobinCounterStrategy.java    # Counter selection
+    ├── observers/
+    │   ├── QueueObserver.java               # Interface
+    │   ├── DisplayBoardObserver.java        # Updates display
+    │   ├── CustomerNotificationObserver.java # SMS/App notification
+    │   └── AnalyticsObserver.java           # Collects metrics
+    ├── states/
+    │   ├── TokenState.java       # Interface
+    │   ├── WaitingState.java
+    │   ├── ServingState.java
+    │   ├── CompletedState.java
+    │   └── CancelledState.java
+    ├── QueueManagementSystem.java  # Singleton - main entry point
+    └── Main.java
+```
+
+### Key Design Patterns
+| Pattern | Usage |
+|---------|-------|
+| **Singleton** | `QueueManagementSystem` - single system instance |
+| **Strategy** | Token assignment algorithms, counter selection |
+| **Observer** | Display board updates, customer notifications |
+| **State** | Token lifecycle (Waiting → Serving → Completed) |
+| **Factory** | Token creation based on customer type |
+| **Command** | Token operations (call next, skip, recall) |
+
+### Core Interfaces
+```java
+// Strategy for assigning tokens to counters
+interface TokenAssignmentStrategy {
+    Optional<Token> getNextToken(List<Token> waitingTokens);
+}
+
+// Observer for queue changes
+interface QueueObserver {
+    void onTokenCalled(Token token, Counter counter);
+    void onTokenCompleted(Token token);
+    void onQueueUpdated(List<Token> waitingTokens);
+}
+
+// State pattern for token lifecycle
+interface TokenState {
+    void callToken(Token token, Counter counter);
+    void completeService(Token token);
+    void cancelToken(Token token);
+    void markNoShow(Token token);
+}
+```
+
+### Key Classes
+```java
+public class Token {
+    private final String tokenNumber;      // e.g., "A-001", "P-015"
+    private final TokenType type;
+    private final Customer customer;
+    private final LocalDateTime createdAt;
+    private TokenState state;
+    private Counter assignedCounter;
+    private LocalDateTime servedAt;
+    private LocalDateTime completedAt;
+}
+
+public class Counter {
+    private final String counterId;
+    private final List<TokenType> servesTypes;  // Types this counter handles
+    private CounterStatus status;
+    private Token currentToken;
+    private String operatorName;
+}
+```
+
+### Interview Discussion Points
+1. **Concurrency**: How to handle race conditions when multiple counters try to pick the same token?
+2. **Fairness**: How to ensure priority tokens don't starve regular tokens?
+3. **Scalability**: How to extend for multiple branches with centralized reporting?
+4. **Real-time Updates**: WebSocket vs polling for display boards?
+5. **Recovery**: What happens if system crashes mid-service?
+
+---
 
 ## 🎓 Interview-Ready Code Standards
 

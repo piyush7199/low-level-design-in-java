@@ -141,6 +141,14 @@ Each problem includes:
 | 9  | [Elevator System](./src/main/java/org/lld/practice/design_elevator_system)                                | State, Strategy, Observer, Command                   |
 | 10 | [Food Delivery System](./src/main/java/org/lld/practice/design_food_delivery_system)                      | Strategy, State, Observer, Factory                   |
 | 11 | [Ride-Sharing System](./src/main/java/org/lld/practice/design_ride_sharing_system)                        | Strategy, State, Observer, Factory, Singleton        |
+| 12 | [Queue Management System](./src/main/java/org/lld/practice/design_queue_management_system)                | Singleton, Strategy, Observer, State                 |
+| 13 | [Cache Management System](./src/main/java/org/lld/practice/design_cache_management_system)                | Strategy, Factory, Decorator, Builder                |
+| 14 | [Rate Limiter](./src/main/java/org/lld/practice/design_rate_limiter)                                       | Strategy, Factory, Builder                           |
+| 15 | [Matching Engine](./src/main/java/org/lld/practice/design_matching_engine)                                 | Strategy, Observer                                   |
+| 16 | [Wallet / Ledger System](./src/main/java/org/lld/practice/design_wallet_system)                            | Command, Observer, Builder                           |
+| 17 | [Pub/Sub System (Mini-Kafka)](./src/main/java/org/lld/practice/design_pub_sub_system)                      | Observer, Strategy, Singleton                        |
+| 18 | [Task Scheduler](./src/main/java/org/lld/practice/design_task_scheduler)                                   | Strategy, Command, Observer, Singleton               |
+| 19 | [E-commerce Cart System](./src/main/java/org/lld/practice/design_ecommerce_cart)                           | Strategy, Decorator, Factory, Builder                |
 
 
 ---
