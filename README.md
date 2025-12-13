@@ -6,7 +6,7 @@
 
 Welcome to the **most comprehensive Low-Level Design resource** for Java developers and interview candidates!  
 
-This repository contains **13 design patterns**, **27 real-world system designs**, and **detailed explanations** of OOP principles, SOLID, and software architecture best practices.
+This repository contains **15 design patterns**, **30 real-world system designs**, and **detailed explanations** of OOP principles, SOLID, and software architecture best practices.
 
 Perfect for:
 - 🎯 **SDE Interview Preparation** (Amazon, Google, Microsoft, etc.)
@@ -42,8 +42,8 @@ Perfect for:
 
 ### For Learning:
 - 📘 **Comprehensive documentation** for every concept
-- 🔹 **13 Design Patterns** with real-world use cases
-- 🛠 **27 Complete Systems** from simple to complex
+- 🔹 **15 Design Patterns** with real-world use cases
+- 🛠 **30 Complete Systems** from simple to complex
 - 🧩 **Progressive difficulty** - start simple, master complex
 - 📊 **UML diagrams** for visual understanding
 
@@ -108,6 +108,8 @@ low-level-design-in-java/
 | 1 | [Decorator](./src/main/java/org/lld/patterns/structural/decorator) | Dynamically adds new behavior to objects at runtime.                        |
 | 2 | [Flyweight](./src/main/java/org/lld/patterns/structural/flyweight) | Reduces memory usage by sharing common parts of object state among objects. |
 | 3 | [Adapter](./src/main/java/org/lld/patterns/structural/adapter)     | Converts one interface into another expected by the client.                 |
+| 4 | [Proxy](./src/main/java/org/lld/patterns/structural/proxy)         | Provides a surrogate or placeholder to control access to another object.    |
+| 5 | [Facade](./src/main/java/org/lld/patterns/structural/facade)      | Provides a simplified interface to a complex subsystem.                     |
 
 ### 🧠 Behavioural Design Patterns
 
@@ -118,6 +120,7 @@ low-level-design-in-java/
 | 3 | [Strategy](./src/main/java/org/lld/patterns/behavioural/strategy)                             | Enables selecting an algorithm's behavior at runtime by encapsulating it within a class and making it interchangeable.             |
 | 4 | [Command](./src/main/java/org/lld/patterns/behavioural/command)                               | Encapsulates a request as an object, thereby allowing users to parameterize clients, delay execution, or queue and log operations. |
 | 5 | [State](./src/main/java/org/lld/patterns/behavioural/state)                                   | Allows an object to change its behavior when its internal state changes, appearing as if it changed its class.                     |
+| 6 | [Template Method](./src/main/java/org/lld/patterns/behavioural/templateMethod)               | Defines the skeleton of an algorithm, letting subclasses override specific steps. |
 
 ---
 
@@ -157,6 +160,9 @@ Each problem includes:
 | 25 | [Calendar/Event Booking System](./src/main/java/org/lld/practice/design_calendar_event_booking)          | Strategy, Factory, Observer, State, Repository        |
 | 26 | [Expense Sharing System (Splitwise-like)](./src/main/java/org/lld/practice/design_expense_sharing_system)  | Strategy, Factory, Graph Algorithm                     |
 | 27 | [Tic-Tac-Toe Game](./src/main/java/org/lld/practice/design_tic_tac_toe)                                    | Strategy, State, Factory, Observer                    |
+| 28 | [Stock Trading System](./src/main/java/org/lld/practice/design_stock_trading_system)                        | Strategy, State, Observer, Singleton, Factory         |
+| 29 | [Social Media Feed System](./src/main/java/org/lld/practice/design_social_media_feed_system)               | Strategy, Observer, Factory, Singleton                 |
+| 30 | [Online Auction System](./src/main/java/org/lld/practice/design_online_auction_system)                     | State, Observer, Strategy, Singleton                    |
 
 
 ---
@@ -324,8 +330,8 @@ We welcome contributions! Here's how:
 
 ## 📈 Repository Stats
 
-- **Design Patterns:** 13 implemented
-- **Practice Problems:** 27 complete systems
+- **Design Patterns:** 15 implemented
+- **Practice Problems:** 30 complete systems
 - **Code Examples:** 350+ files
 - **Lines of Code:** 15000+
 - **Documentation:** Comprehensive READMEs for each topic

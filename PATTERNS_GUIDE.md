@@ -422,6 +422,64 @@ coffee = new SugarDecorator(coffee);
 
 ---
 
+### 4. Proxy Pattern 🎭
+
+**Intent:** Provide a surrogate or placeholder for another object to control access to it.
+
+**When to Use:**
+- Lazy loading of expensive objects
+- Access control (protection proxy)
+- Remote object representation
+- Caching results
+
+**Real-World Examples:**
+- Image loading (load only when displayed)
+- Database connection pooling
+- API rate limiting
+- Security proxies
+
+**Pros:**
+✅ Lazy loading  
+✅ Access control  
+✅ Performance optimization  
+
+**Cons:**
+❌ Additional complexity  
+❌ Performance overhead  
+
+**In This Repo:** [Proxy Implementation](./src/main/java/org/lld/patterns/structural/proxy)
+
+---
+
+### 5. Facade Pattern 🏛️
+
+**Intent:** Provide a unified interface to a set of interfaces in a subsystem.
+
+**When to Use:**
+- Simplify complex subsystem
+- Provide simple interface to complex library
+- Layer architecture
+- Legacy system integration
+
+**Real-World Examples:**
+- Home theater remote control
+- Database access layers
+- API wrappers
+- Framework abstractions
+
+**Pros:**
+✅ Simplifies interface  
+✅ Reduces coupling  
+✅ Easier to use  
+
+**Cons:**
+❌ May hide functionality  
+❌ Additional layer  
+
+**In This Repo:** [Facade Implementation](./src/main/java/org/lld/patterns/structural/facade)
+
+---
+
 ## Behavioral Patterns
 
 ### 1. Strategy Pattern 🎯
@@ -781,9 +839,8 @@ STRUCTURAL: How objects are composed
 ├── Adapter        → Interface bridge
 ├── Decorator      → Add functionality
 ├── Flyweight      → Share data
-├── Facade         → Simplified interface
 ├── Proxy          → Controlled access
-└── Composite      → Tree structure
+└── Facade         → Simplified interface
 
 BEHAVIORAL: How objects communicate
 ├── Strategy       → Algorithms
@@ -791,8 +848,7 @@ BEHAVIORAL: How objects communicate
 ├── State          → State-based behavior
 ├── Command        → Encapsulate requests
 ├── Chain of Resp. → Handler chain
-├── Template Method→ Algorithm skeleton
-└── Iterator       → Sequential access
+└── Template Method→ Algorithm skeleton
 ```
 
 ---
