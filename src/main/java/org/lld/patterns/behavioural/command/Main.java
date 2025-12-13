@@ -17,5 +17,7 @@ public class Main {
         remote.setCommand(lightOn);
         remote.pressButton();
         remote.pressUndo();
+        remote.setCommand(lightOff);
+        remote.pressButton();
     }
 }

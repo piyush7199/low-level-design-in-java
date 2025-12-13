@@ -2,7 +2,6 @@ package org.lld.practice.design_online_auction_system.improved_solution;
 
 import org.lld.practice.design_online_auction_system.improved_solution.models.Auction;
 import org.lld.practice.design_online_auction_system.improved_solution.models.AuctionStatus;
-import org.lld.practice.design_online_auction_system.improved_solution.models.Bid;
 import org.lld.practice.design_online_auction_system.improved_solution.observers.BidNotificationObserver;
 import org.lld.practice.design_online_auction_system.improved_solution.services.AuctionService;
 
@@ -27,9 +26,9 @@ public class Main {
 
         // Place bids
         System.out.println("2. Placing bids:");
-        Bid bid1 = auctionService.placeBid("A1", "user1", 150.0);
-        Bid bid2 = auctionService.placeBid("A1", "user2", 200.0);
-        Bid bid3 = auctionService.placeBid("A1", "user1", 250.0);
+        auctionService.placeBid("A1", "user1", 150.0);
+        auctionService.placeBid("A1", "user2", 200.0);
+        auctionService.placeBid("A1", "user1", 250.0);
         System.out.println();
 
         // Try invalid bid
